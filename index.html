@@ -1,0 +1,471 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>EcmaScript 6 </title>
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/white.css">
+        <link rel="stylesheet" href="css/presentation.css">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                  <h1>ES6 - ES2015</h1>
+
+                    <h2><a href="http://www.frro.utn.edu.ar">Utn Rosario</a></h2>
+                    <h3>TTADS</h3>
+                    <h3>
+                      <a href="https://github.com/utnfrrottads/">
+
+                        Técnicas y Tecnologías Avanzadas de Desarrollo de Software</a>
+                    </h3>
+                    <p>
+                      <a href="https://github.com/aotaduy">Ing. Andres Otaduy</a>
+                      <a href="https://github.com/adrianmeca">Ing. Adrian Meca</a>
+
+                    </p>
+                </section>
+                <section>
+                  <section>
+                    <h1>ES6 - ES2015</h1>
+                    <p>
+                      Trata de mejorar las partes malas de javascript aportando caracteristicas de lenguajes orientados a objetos  y programacion funcional.
+                    </p>
+                    <ul>
+                      <li>Variables</li>
+                      <li>Funciones =&gt;</li>
+                      <li>Strings</li>
+                      <li>Sets, Maps</li>
+                      <li>Clases y Objetos</li>
+                      <li>Modulos</li>
+                      <li>Generadores</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h1>Constantes</h1>
+                    <p>
+                      Las constantes se marcan como inmutables.
+                    </p>
+                    <pre><code class="js">const pi = 3.14159;
+const env = {
+  type: 'production',
+  logs: 'debug'
+  version: '1.2.3'
+};
+pi = 3.141593; // ERROR
+env.version = '1.2.4' // no error</code></pre>
+                  </section>
+                  <section>
+                    <h1>Variables con let</h1>
+                    <pre><code class="js">function message(code){
+  if (code === 10) {
+    let temp = '12345';
+    var message = temp + '678';
+  } else {
+    message = '679';
+  }
+  return message;
+}</code></pre>
+<pre><code class="js">for (let i = 0; i < a.length; i++) {
+    let x = a[i]
+    …
+}
+//i here does not exists and returns an error
+
+for (var i = 0; i < a.length; i++) {
+    …
+}</code></pre>
+                  </section>
+                  <section>
+                    <h1>Funciones =&gt;</h1>
+                    <pre><code class="js">let evens = [1,2,3,4,5,6,7,8].map(i => i *2);
+let odds  = evens.map(v => v + 1);
+let pairs = evens.map(v => ({ even: v, odd: v + 1 }));
+let nums  = evens.map((v, i) => v + i);
+
+let total = 0;
+let max = 0;
+evens.forEach((each, index) => {
+  console.log(index, 'Numero:', each);
+  total = total + each;
+  max = max < each ? each : max;
+});
+
+console.log('Total:', total, 'Max:', max);</code></pre>
+                  </section>
+                  <section>
+                    <h1>Funciones =&gt; this</h1>
+<p>
+  En las funciones =&gt; el this de dentro del contexto de la funcion es el mismo que del contexto padre.
+</p>
+<pre><code class="js">angular.controller('TestController', function(){
+  this.numbers = [1,2,3,3,4,5,6,7,8];
+  this.factor = 100;
+  this.total = 0;
+  this.numbers.forEach((each) => {
+    this.total = this.total + each * this.factor
+  });
+})</code></pre>
+
+                  </section>
+                  <section>
+                    <h1>Funciones</h1>
+                    <pre><code class="js">function f (x, y = 7, z = 42) {
+    return x + y + z
+}
+f(1) === 50
+// Rest parameters
+function f (x, y, ...a) {
+    return (x + y) * a.length
+}
+f(1, 2, "hello", true, 7) === 9</code></pre>
+                  </section>
+                  <section>
+                    <h1>Interpolacion de Strings</h1>
+                    <p>
+                      Permite usar templates y reemplazo de variables mas eficiente que la concatenacion sucesiva para formar un string
+                    </p>
+                    <pre><code class="js">var cliente = { nombre: "Pepe" }
+var tarjeta = { monto: 7, producto: "Bar", precio: 42 }
+var mensaje = `Hola ${cliente.nombre},
+queres comprar ${tarjeta.monto} ${tarjeta.producto} por
+un total de ${tarjeta.monto * tarjeta.precio} pesos?`</code></pre>
+                  </section>
+
+                  <section>
+                    <h1>Sets</h1>
+                    <pre><code class="js">let s = new Set(["Hola", "chau"]);
+s.add("hello").add("goodbye").add("hello");
+s.size === 4;
+s.has("hello") === true;
+s.delete("chau");
+for (let item of s) console.log(s)
+for (let key of s.values()) { // insertion order
+  console.log(key)
+}
+s.forEach(element => console.log(element));
+s.map(each => `| ${each}|`);
+    </code></pre>
+                  </section>
+<section>
+  <h1>Maps</h1>
+  <pre><code class="js">var myMap = new Map();
+
+var keyString = "a string",
+    keyObj = {},
+    keyFunc = function () {};
+
+// setting the values
+myMap.set(keyString, "value associated with 'a string'");
+myMap.set(keyObj, "value associated with keyObj");
+myMap.set(keyFunc, "value associated with keyFunc");
+
+myMap.size; // 3
+
+// getting the values
+myMap.get(keyString);    // "value associated with 'a string'"
+myMap.get(keyObj);       // "value associated with keyObj"
+myMap.get(keyFunc);      // "value associated with keyFunc"
+
+myMap.get("a string");   // "value associated with 'a string'"
+                         // because keyString === 'a string'
+myMap.get({});           // undefined, because keyObj !== {}
+myMap.get(function() {}) // undefined, because keyFunc !== function () {}</code></pre>
+</section>
+<section>
+  <h1>Maps y Objetos</h1>
+  <ul>
+    <li>Las claves son cualquier objeto</li>
+    <li>El tamanio se determina facilmente</li>
+    <li>Es facil iterar por sus elementos</li>
+    <li>Las claves son dinamicas</li>
+  </ul>
+</section>
+<section>
+  <h1>Clases</h1>
+  <pre><code class="js">class Shape {
+    constructor (id, x, y) {
+        this.id = id
+        this.move(x, y)
+    }
+    toString () {
+      return `Shape(${this.id})`
+    }
+    move (x, y) {
+        this.x = x
+        this.y = y
+    }
+}
+class Rectangle extends Shape {
+    static defaultRectangle () {
+        return new Rectangle("default", 0, 0, 100, 100)
+    }
+    constructor (id, x, y, width, height) {
+        super(id, x, y)
+        this.width  = width;
+        this.height = height;
+    }
+    toString () {
+      return "Rectangle > " + super.toString();
+    }
+    perimeter() {
+      return (width + height) * 2
+    }
+}
+const pi = 3.14159;
+class Circle extends Shape {
+    constructor (id, x, y, radius) {
+        super(id, x, y);
+        this.radius = radius;
+    }
+    toString () {
+      return "Circle > " + super.toString()
+    }
+    perimeter() {
+      return pi * this.radius * this.radius;
+    }
+}
+
+var defRectangle = Rectangle.defaultRectangle()
+</code></pre>
+
+</section>
+<section>
+  <h1>Getter/Setters</h1>
+  <pre><code class="js">
+  class User {
+    constructor(name, pass) {
+      this._name = name;
+      this._pass = pass;
+    }
+    get name () { return _name}
+    set name (aName) { _name = name}
+    get pass () {return '********'}
+    set pass (aPass) {
+      if (aPass.length < 8 ){
+        throw 'Bad Password'
+      }
+      _pass = aPass
+    }
+    login(user, pass) {
+      return this.user === user && pass == this._pass
+    }
+  }</code></pre>
+
+</section>
+
+<section>
+  <h1>Ejercicio</h1>
+  <p>
+    Agregar la clase Triangle al ejemplo y agregar los metodos necesrios en todas las clases para caluclar el area.
+  </p>
+  <p>
+    Agregar una clase que permita formar una figura compuesta agregando diferentes figuras con el metodo add() y que permita calcular el area total ocupada por las formas.
+    Suponiendo que no hay intersecciones entre las mismas.
+    HAcer un script de ejemplo que permita agregar 10 figuras al azar y que calcule el area y el perimetro de las mismas.
+  </p>
+</section>
+<section>
+  <h1>Modulos</h1>
+  <h2>Modulos !== Scripts</h2>
+  <ul>
+    <li>Archivos javascript con semantica propia</li>
+    <li>strict mode</li>
+    <li>Las variables son propias de ese archivo</li>
+    <li>this === undefined</li>
+    <li>Los modulos exportan e importan de otros modulos objetos y bindings</li>
+  </ul>
+</section>
+
+<section>
+  <h1>Modulos</h1>
+  <pre><code class="js">// export data
+export var color = "red";
+export let name = "Nicholas";
+export const magicNumber = 7;
+
+// export function
+export function sum(num1, num2) {
+    return num1 + num1;
+}
+
+// export class
+ export default class Rectangle {
+    constructor(length, width) {
+        this.length = length;
+        this.width = width;
+    }
+}
+
+// this function is private to the module
+function subtract(num1, num2) {
+    return num1 - num2;
+}
+
+// define a function...
+function multiply(num1, num2) {
+    return num1 * num2;
+}
+
+// ...and then export it later
+export { multiply };</code></pre>
+<pre><code class="js">import Rectangle {multiply} from './testmodule.js'
+import * from './testmodule.js'</code></pre>
+</section>
+
+<section>
+  <h1>Generadores</h1>
+<ul>
+  <li>Los loops <code>for</code> pueden volverse complejos</li>
+  <li>Por cada loop una variable para iterar</li>
+  <li><code>.forEach() .map() .reduce() .filter() .find()</code></li>
+  <li>Iterators</li>
+</ul>
+<pre><code class="js">var colors = ["red", "green", "blue"];
+
+for (var i = 0, len = colors.length; i < len; i++) {
+    console.log(colors[i]);
+}</code></pre>
+</section>
+<section>
+  <h1>Iteradores</h1>
+  <pre><code class="js">function createIterator(items) {
+
+    var i = 0;
+
+    return {
+        next: function() {
+
+            var done = (i >= items.length);
+            var value = !done ? items[i++] : undefined;
+
+            return {
+                done: done,
+                value: value
+            };
+
+        }
+    };
+}
+
+var iterator = createIterator([1, 2, 3]);
+
+console.log(iterator.next());           // "{ value: 1, done: false }"
+console.log(iterator.next());           // "{ value: 2, done: false }"
+console.log(iterator.next());           // "{ value: 3, done: false }"
+console.log(iterator.next());           // "{ value: undefined, done: true }"
+
+// for all further calls
+console.log(iterator.next());           // "{ value: undefined, done: true }"</code></pre>
+</section>
+<section>
+  <h1>Generadores</h1>
+  <p>
+    es6 proporciona una forma mas sencilla de crear iteradores con el * y las expresiones yield
+  </p>
+  <pre><code class="js">
+    function *secuencia() {
+      yield 1;
+      yield 2;
+      yield 3;
+      return 4;
+    }
+    let sec = secuencia();
+    console.log(sec.next()); // muestra 1
+    console.log(sec.next()); // muestra 2
+    console.log(sec.next()); // muestra 3
+
+  </code></pre>
+  </section>
+
+  <section>
+    <h1>Generadores</h1>
+    <pre><code class="js">function *secuenciaPares(desde, hasta) {
+
+        for (let i = Math.ceil(desde / 2); i <= Math.floor(hasta / 2) ; i++) {
+          yield i * 2;
+        }
+        return;
+      }
+    for (let num of secuenciaPares(1,10)) {
+      console.log(num);
+    }
+  </code></pre>
+  </section>
+</section>
+<section>
+  <h1>Ejercicio</h1>
+  <ul>
+     <li>Crear un generador que permita obtener los primeros n terminos de la serie de fibonacci.</li>
+     <li>Hacer una funcion que reciba 3 colecciones y cree un generador con la concatenacion de las 3.</li>
+     <li>Hacer un generador que genera una secuencia de n numeros aleatorios</li>
+  </ul>
+</section>
+<section>
+  <section>
+    <h1>ES6 + Angular</h1>
+    <ul>
+      <li>Controllers</li>
+      <li>Services</li>
+      <li>modules</li>
+    </ul>
+    <p>
+      Podemos usar clases para cada tipo de componente, pero la injeccion de dependencias la tenemos que hacer a mano con la notacion array
+    </p>
+  </section>
+<section>
+  <h1>Controller</h1>
+  <pre><code class="js">
+class Controller {
+  constructor($scope, $http) {
+    this.http = $http;
+    this.scope = $scope;
+  }
+...
+
+}
+
+angular.controller('Controller', [$scope, '$http', Controller]);
+  </code></pre>
+</section>
+</section>
+            </div>
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // More info https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                history: true,
+                center: false,
+
+                // More info https://github.com/hakimel/reveal.js#dependencies
+                dependencies: [
+                    { src: 'plugin/markdown/marked.js' },
+                    { src: 'plugin/markdown/markdown.js' },
+                    { src: 'plugin/notes/notes.js', async: true },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+        </script>
+    </body>
+</html>
